@@ -7,13 +7,13 @@ SafeShop is a consumer-to-consumer e-commerce website aimed to remove the number
 - storing transaction data using ethereum for security
 
 ## Requirements
----
+
 To run this project, you might need:
 - python3
 - a terminal
 
 ## How to use
----
+
 ### Setting up the firebase: Part 1
 For security reasons, the credentials file needed for the database to work is not included. 
 You will need to:
@@ -76,7 +76,7 @@ $ pip install -r requirements.txt
 ```
 To install the relevant modules. 
 ## Running the project
----
+
 In order to run the project, run the following command.
 ```
 $ python app.py
@@ -86,35 +86,38 @@ Alternatively, you may run:
 $ flask run
 ```
 ## Editing the project
----
+
 To edit the following files, please look for the relevant references
 - `app.py` database information: firebase database documentation
 - `app.py` authentication information: firebase auth documentation
 - `app.py` flask: flask documentation
 - `templates/*`: jinja2 documentation
 ## External resources
----
+
 - Firebase realtime database
 - Firebase authentication
 - Filestack image uploading
 - Flask
 - jinja2
 ## Warnings and important notices
----
+
 Please note that the project is in no way complete, and might not be completed. The following features were not implemented for the sake of prototyping:
 - uploading transaction data to ethereum (this was run in a separate javascript file that is not included nor integrated as the security of the code have many issues)
 - implementation of artificial intelligence for both listing and transaction scanning
 - fully functional user data setup
 
 The code may also not be optimised, nor are the security for the database querying very good.
-## Notes of thanks and appreciation
----
-Project author: Saw Ze Dong (github: [sawzedong](https://github.com/sawzedong))
+## Other related resources
 
-My teammates: Zheng Kang and Tristan
 
 Our proposal may be found at: [https://docs.google.com/document/d/1Ifmf7NdQzoiLS5i2eM8fWThtHp66hqVr/edit?usp=sharing&ouid=105820086403864632040&rtpof=true&sd=true](https://docs.google.com/document/d/1Ifmf7NdQzoiLS5i2eM8fWThtHp66hqVr/edit?usp=sharing&ouid=105820086403864632040&rtpof=true&sd=true)
 
 Our slides for the presentation may be found at: [https://docs.google.com/presentation/d/16W-uZnFuEFhl2VT8d3PetmpNF3XC3Rv9ojldL6ckqpk/edit?usp=sharing](https://docs.google.com/presentation/d/16W-uZnFuEFhl2VT8d3PetmpNF3XC3Rv9ojldL6ckqpk/edit?usp=sharing)
 
 Our demo video may be found at: [https://drive.google.com/file/d/1KX3akmXpJD6_JlzzPwYJvZprZzKemEuF/view?usp=sharing](https://drive.google.com/file/d/1KX3akmXpJD6_JlzzPwYJvZprZzKemEuF/view?usp=sharing)
+
+## Notes of thanks and appreciation
+
+Project author: Saw Ze Dong (github: [sawzedong](https://github.com/sawzedong))
+
+My teammates: Zheng Kang and Tristan
