@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Ratings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/transactions.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="left">
+    {% if username == 'shopaholic' %}
+    <img src="{{ url_for('static', filename='img/nature_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% elif username == 'seller_123' %}
+    <img src="{{ url_for('static', filename='img/dog_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% else %}
+    <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Pic" class="pfp">
+    {% endif %}
+    <br>
+    <h2>{{ username }}</h2>
+
+    <div class="nav">
+        <a class="linkitem" href="index.html">Profile</a>
+        <a class="linkitem" href="index.html">Settings</a>
+        <a class="linkitem" href="{{ url_for('my_listings') }}">My listings</a>
+        <a class="linkitem" href="{{ url_for('ratings') }}">Ratings</a>
+        <a class="linkitem active" href="{{ url_for('transactions') }}">Transactions</a>
+        <a class="linkitem" href="{{ url_for('logout') }}" id="logout">Logout</a>
+    </div>
+
+</div>
+<div id="right">
+    <div class="righttop">
+        <h1>Transactions</h1>
+        <span>
+            <label for="action">Action: </label>
+            <select id="action" name="action">
+                <option value="buy">buy</option>
+                <option value="sell">sell</option>
+            </select>
+        </span>
+    </div>
+    <table>
+        <colgroup>
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Item</th>
+                <th>Seller</th>
+                <th>Price</th>
+                <th>Transaction Hash</th>
+            </tr>
+                <td>1</td>
+                <td>18 Sep 2021</td>
+                <td>Joy-Con Controllers</td>
+                <td>seller_123</td>
+                <td>$200.00</td>
+                <td><a target="_blank" href="https://dashboard.alchemyapi.io/mempool/eth-kovan/tx/0x5c73e2f7954b9275daf71e87b271e21c512f835b3dc7334a5fdfa73b25846809">Track</a></td>
+            <tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Ratings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ratings.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div id="left">
+    {% if username == 'shopaholic' %}
+    <img src="{{ url_for('static', filename='img/nature_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% elif username == 'seller_123' %}
+    <img src="{{ url_for('static', filename='img/dog_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% else %}
+    <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Pic" class="pfp">
+    {% endif %}
+    <br>
+    <h2>{{ username }}</h2>
+
+    <div class="nav">
+        <a class="linkitem" href="index.html">Profile</a>
+        <a class="linkitem" href="index.html">Settings</a>
+        <a class="linkitem" href="{{ url_for('my_listings') }}">My listings</a>
+        <a class="linkitem active" href="{{ url_for('ratings') }}">Ratings</a>
+        <a class="linkitem" href="{{ url_for('transactions') }}">Transactions</a>
+        <a class="linkitem" href="{{ url_for('logout') }}" id="logout">Logout</a>
+    </div>
+
+</div>
+<div id="right">
+    <h1>Ratings</h1>
+    {% if haveRatings %}
+        <div class="rating-item">
+            <h2>Average ratings</h2>
+            <div class="rating_stars {{ avgstars }}">
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+            </div>
+            <p>Your average rating is <strong>{{ avgrating }}</strong> / 5 stars, with <strong>{{ numratings }}</strong> ratings.</p>
+        </div>
+
+        {% for item in ratings %}
+        <div class="rating-item">
+            <div class="poster">
+                <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Picture" class="pfp">
+                <span>{{ item.username }}</span>
+            </div>
+            <div class="rating_stars {{ item.stars }}">
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+            </div>
+            <p class="desc">{{ item.desc }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2>You have no ratings currently.</h2>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="login_wrapper">
+    <form id="login_form" action="{{ url_for('loginhandler') }}" method="post">
+        {% if redir=='create' %}
+        <h2>Login <span>now to create a listing</span></h2>
+        {% else %}
+        <h2>Login</h2>
+        {% endif %}
+        <p>
+            <label for="email">Email:</label><br/>
+            <input type="email" name="email" id="email" required/>
+        </p>
+        <p>
+            <label for="password">Password:</label><br/>
+            <input type="password" name="password" id="password" required/>
+        </p>
+        {% if error %}
+        <p id="error_msg">
+            There was an error with signing you in. Please try again later.
+        </p>
+        {% endif %}
+        <p id="forgot_password_wrapper">
+            <a href="index.html">Forgot password?</a>
+        </p>
+        <button type="submit" id="login_submit">Login</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{
+  "listings" : [ {
+    "category" : "electronics",
+    "description" : "Somewhat used joy-con controllers, comes with all 4 for $200",
+    "id" : "0",
+    "image" : "https://cdn.filestackcontent.com/xeAliTG3QmyOYYzrsZ81",
+    "name" : "Joy-Con Controllers",
+    "price" : "200.00",
+    "stock" : 1,
+    "uid" : "xdS15LLIbGUEDP1FJMBhF4MFmLK2",
+    "username" : "seller_123",
+    "verified" : true
+  }, {
+    "category" : "electronics",
+    "description" : "Very new, never used maccbook pro. Very good, cheap, please by!",
+    "id" : "1",
+    "image" : "https://cdn.filestackcontent.com/Q0lYCwRIT1iXkVHNzVwE",
+    "name" : "Macbook Pro",
+    "price" : "100.00",
+    "stock" : 0,
+    "uid" : "cbbWNs0l9iTROVv1rKtBcQ0oLeC2",
+    "username" : "goodguyseller",
+    "verified" : false
+  }, {
+    "category" : "electronics",
+    "description" : "very reasonable price for cables. buy",
+    "id" : "2",
+    "image" : "https://cdn.filestackcontent.com/h6XB2oYReSEWxpjNObkx",
+    "name" : "Charging Cord",
+    "price" : "1000.00",
+    "stock" : 1,
+    "uid" : "cbbWNs0l9iTROVv1rKtBcQ0oLeC2",
+    "username" : "goodguyseller",
+    "verified" : false
+  }, {
+    "category" : "electronics",
+    "description" : "White, thin iphone 12 phone case.",
+    "id" : "3",
+    "image" : "https://cdn.filestackcontent.com/hfkSCUFbTxazpSuU0NaT",
+    "name" : "iPhone 12 Phone Case",
+    "price" : "22.00",
+    "stock" : 1,
+    "uid" : "xdS15LLIbGUEDP1FJMBhF4MFmLK2",
+    "username" : "seller_123",
+    "verified" : true
+  }, {
+    "category" : "electronics",
+    "description" : "cheap and brand new iphone 12, good buy!",
+    "id" : "4",
+    "image" : "https://cdn.filestackcontent.com/at0nw8nVSe7ZZZMMhsw9",
+    "name" : "iPhone 12",
+    "price" : "150.00",
+    "stock" : 1,
+    "uid" : "cbbWNs0l9iTROVv1rKtBcQ0oLeC2",
+    "username" : "goodguyseller",
+    "verified" : false
+  } ],
+  "ratings" : {
+    "cbbWNs0l9iTROVv1rKtBcQ0oLeC2" : [ {
+      "desc" : "Product was not up to standard",
+      "stars" : 2,
+      "username" : "os_pro"
+    }, {
+      "desc" : "Images and product descriptions are misleading. Product also took very long to arrive",
+      "stars" : 1,
+      "username" : "joeeeel"
+    } ],
+    "xdS15LLIbGUEDP1FJMBhF4MFmLK2" : [ {
+      "desc" : "Good delivery and prices. Great job!",
+      "stars" : 5,
+      "username" : "buyerabc"
+    }, {
+      "desc" : "Goods took forever to arrive and are priced way too highly. Service was not bad though",
+      "stars" : 3,
+      "username" : "sunset_cat"
+    } ]
+  },
+  "warnings" : {
+    "Z4Z4VxIrjEhKQk5eJwZFljVmwX92" : 0,
+    "cbbWNs0l9iTROVv1rKtBcQ0oLeC2" : 3,
+    "xdS15LLIbGUEDP1FJMBhF4MFmLK2" : 0
+  }
+}

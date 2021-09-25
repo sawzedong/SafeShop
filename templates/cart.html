@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/cart.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="right">
+    <div class="righttop">
+        <h1>Cart: {{ numitems }} items</h1>
+    </div>
+    {% if numitems != 0 %}
+    <table>
+        <colgroup>
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 25%;">
+            <col span="1" style="width: 25%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 5%;">
+        </colgroup>
+        <tbody>
+            
+            <tr>
+                <th>No.</th>
+                <th>Image</th>
+                <th>Item</th>
+                <th>Seller</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            {% for item in cart %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><img src="{{ item.image }}"></td>
+                <td>
+                    {{ item.name }}
+                    {% if not item.verified %}
+                    <br/><span class='warning'>Warning: possible scam</span>
+                    {% endif %}
+                </td>
+                <td>{{ item.username }}</td>
+                <td>${{ item.price }}</td>
+                <td><a class="remove" id="{{ 'btn%d' % (loop.index-1) }}" href=" {{ url_for('delete_cart', id=(loop.index-1)) }}">×</button></a>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${{ totalprice }}</td>
+                <td></a>
+            </tr>
+        </tbody>
+    </table>
+    
+        {% if contains_scam_listing %}
+        <button class="cart_btn" onclick="openModal()">
+            Checkout
+        </button>
+        {% else %}
+        <a class="cart_btn" href="{{ url_for('checkout') }}">
+            Checkout
+        </a>
+        {% endif %}
+
+    {% else %} 
+    <p>
+        Your cart is currently empty. <a href="{{ url_for('index') }}" class='slink'>Shop now.</a>
+    </p>
+    {% endif %}
+</div>
+{% if contains_scam_listing %}
+<div class="overlay dnone" id="overlay">
+    <div class="display">
+        <div class="content">
+            <p>You are about to check at least 1 item that is marked as a <span>potential scam.</span> Are you sure?</p>
+            <div class="btns">
+                <button class="cancel" onclick="closeModal()">Cancel</button>
+                <a href="{{ url_for('checkout') }}"><button class="continue">Continue</button></a>
+            </div>
+        <div class="content">
+    </div>
+</div>
+{% endif %}
+<script>
+    function openModal() {
+        document.getElementById('overlay').classList.remove('dnone');
+    }
+    function closeModal() {
+        document.getElementById('overlay').classList.add('dnone');
+    }
+</script>
+{% endblock %}

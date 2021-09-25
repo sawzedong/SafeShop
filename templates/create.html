@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Creating Listing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/create.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="create_wrapper">
+    <form id="create_form" name="create_form" action="{{ url_for('create_listing') }}" method="post" onsubmit="return passCheck()" enctype="multipart/form-data">
+        <h2>Create a listing</h2>
+        {% if disable=='disabled' %}
+        <div class="warning-text">
+            <img src="{{ url_for('static', filename='img/warning.png') }}" class="warning-symbol">
+            <p>Your account is temporarily suspended as you have <strong>3 or more</strong> listings that are flagged as scams. Please <a href="{{ url_for('index') }}">contact us if you think this is an error.</a></p>
+        </div>
+        {% endif %}
+        <p>
+            <label for="name">Item name:</label><br/>
+            <input id="name" type="text" name="name" required {{disable}}/>
+        </p>
+        <p>
+            <label for="price">Item price:</label><br/>
+            <input id="price" type="number" name="price" step=".01" required {{disable}}/>
+        </p>
+        <p>
+            <label for="desc">Item description:</label><br/>
+            <textarea rows="5" name="desc" id="desc" required {{disable}}></textarea>
+        </p>
+        <p>
+            <label for="image">Item image:</label><br/>
+            <input id="image file_upload" type="file" name="image"  accept="image/png, image/jpeg, image/jpg" required {{disable}}/>
+        </p>
+        <p id="scam_p">
+            <label for="checker">Scam detection:</label><br/>
+            <button class="container scam_checker" onclick="checkbox()"  {{disable}} id="scam_btn">
+                    <input id="scam" type="checkbox" name="scam" required disabled/>
+                    <span class="checkmark" id="scamafter"></span>
+                    <span class="loader dnone" id="loading"></span>
+                    <label for="scam">Verify Scam Checker</label><br>
+            </button>
+        </p>
+        <p class="dnone">
+            <input id="scam_verifier" type="text" name="scam_verifier" value="False"  {{disable}}>
+        </p>
+        <p class="dnone">
+            <input id="imgsrc" type="text" name="imgsrc" value=""  {{disable}}>
+        </p>
+        <p id="after_scam_p" class="dnone">
+            <span class="scam_error_message">Please check this box</span>
+        </p>
+        <p id="scam_verifier_msg" class="dnone">
+        </p>
+        <button id="create_submit" type="submit" class="submit" onclick="uploadData()"  {{disable}}>
+            <span id="btntext" class="">Create</span>
+            <progress id="progress" value="0" max="100" class="dnone"> 0% </progress>
+        </button><br/>
+        <button id="reset" type="reset" class="reset" onclick="resetData()"  {{disable}}>Reset</button>
+    </form>
+</div>
+<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+
+    function checkbox() {
+        if (document.getElementById("scam").checked == false && document.getElementById("create_form").checkValidity()) {
+            document.getElementById("scam").classList.add("dnone");
+            document.getElementById("scamafter").classList.add("dnone");
+            document.getElementById("loading").classList.remove("dnone");
+            document.getElementById("after_scam_p").classList.add("dnone");
+            setTimeout(function () {
+                document.getElementById("scam").checked = true;
+                document.getElementById("after_scam_p").classList.add("dnone");
+                document.getElementById("scam").classList.remove("dnone");
+                document.getElementById("scamafter").classList.remove("dnone");
+                document.getElementById("loading").classList.add("dnone");
+                document.getElementById('name').readOnly = true;
+                document.getElementById('price').readOnly = true;
+                document.getElementById('desc').readOnly = true;
+                document.getElementById('image file_upload').readOnly = true;
+
+                fetch('{{ url_for("listing_verify") }}').then(function(response) {
+                    return response.json();
+                }).then(function(data) {
+                    if (data.value == "True") {
+                        document.getElementById('scam_btn').classList.add('notscam');
+                        document.getElementById('scam_verifier_msg').classList.add('notscam');
+                        document.getElementById('scam_verifier_msg').innerText = "Your listing is verified.";
+                    } else {
+                        document.getElementById('scam_btn').classList.add('scam');
+                        document.getElementById('scam_verifier_msg').classList.add('scam');
+                        document.getElementById('scam_verifier_msg').innerText = "Your listing is marked as a possible scam.";
+                    }
+                    document.getElementById('scam_verifier_msg').classList.remove('dnone');
+                    document.getElementById('scam_verifier').value = data.value;
+                });
+            }, 1000);
+        }
+    }
+
+    function resetData() {
+        window.location.replace('{{ url_for("create") }}');
+    }
+
+
+
+    const apikey = 'REDACTED'; //replace with your own API KEY
+    const client = filestack.init(apikey);
+
+    const onProgress = (evt) => {
+        console.log(`${evt.totalPercent}%`);
+        document.getElementById('progress').value = `${evt.totalPercent}`
+        document.getElementById('progress').innerText = `${evt.totalPercent}%`
+    };
+
+    function uploadData() {
+        event.preventDefault();
+
+        document.getElementById('btntext').classList.add('dnone');
+        document.getElementById('progress').classList.remove('dnone');
+        console.log('uploading...')
+        let fileList = document.getElementById('image file_upload').files[0];
+        client.upload(fileList, { onProgress }, {})
+            .then(res  => {
+                document.getElementById('imgsrc').value = res.url;
+                console.log(res)
+                document.getElementById('progress').classList.add('dnone');
+                document.getElementById('btntext').classList.remove('dnone');
+                document.getElementById("create_form").submit();
+            })
+            .catch(err => {
+                document.getElementById('imgsrc').value = 'it threw an error';
+                console.log(err)
+            });
+
+    }
+
+</script>
+{% endblock %}

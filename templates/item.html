@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - {{ item.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/item.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div id="left">
+    <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Picture" class="pfp"><br>
+    <h2>{{ item.username }}</h2>
+    {% if item.verified %}
+    <button class="report scam">Report scam</button>
+    {% else %}
+    <button class="report notscam">Report not scam</button>
+    {% endif %}
+    <h3 class="heading">Seller's ratings</h3>
+    <div class="rating_section">
+        <div class="rating-item">
+            <h2>Average ratings</h2>
+            <div class="rating_stars {{ avgstars }}">
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+            </div>
+            <p>Seller's average rating is <strong>{{ avgrating }}</strong> / 5 stars, with <strong>{{ numratings }}</strong> ratings.</p>
+        </div>
+
+        {% for item in ratings %}
+        <div class="rating-item">
+            <div class="poster">
+                <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Picture" class="pfp">
+                <span>{{ item.username }}</span>
+            </div>
+            <div class="rating_stars {{ item.stars }}">
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star checked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+                <div class="fa fa-star unchecked"></div>
+            </div>
+            <p class="desc">{{ item.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div id="right">
+    <h1>{{ item.name }}</h2>
+    <img src="{{ item.image }}">
+    <h2>${{ item.price }}</h2>
+    <p>{{ item.description }}</p>
+    {% if item.verified %}
+    <div class="scam_msg">
+        <img src="{{ url_for('static', filename='img/check.png') }}">
+        <p>SafeShop's scam verifier has shown that this item is most likely not a scam.</p>
+    </div>
+    {% else %}
+    <div class="scam_msg scam">
+        <img src="{{ url_for('static', filename='img/warning.png') }}">
+        <p>SafeShop's scam verifier has shown that this item might be a <strong>scam</strong>.</p>
+    </div>
+    {% endif %}
+    
+    {% if item.stock == 0 %}
+    <div class="cart_container">
+        <button class="cart_btn" disabled>Add to cart</button>
+    </div>
+    <div class="outofstock"><p>This item is out of stock</p></div>
+    {% else %}
+    <div class="cart_container" id="buyitem">
+        <input type='number' value={{ item.id }} name='id' id='id' class='dnone' readonly>
+        {% if item.verified %}
+        <a href="{{ url_for('add_to_cart', id=(item.id)) }}"><button class="cart_btn available">Add to cart</button></a>
+        {% else %}
+        <button class="cart_btn available" onclick = "openModal()">Add to cart</button>
+        {% endif %}
+
+        {% if err %}
+            <div class="outofstock"><p>Error: This item is already in your cart.</p></div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% if not item.verified %}
+<div class="overlay dnone" id="overlay">
+    <div class="display">
+        <div class="content">
+            <p>You are about to add an item that is marked as a <span>potential scam.</span> Are you sure?</p>
+            <div class="btns">
+                <button class="cancel" onclick="closeModal()">Cancel</button>
+                <a href="{{ url_for('add_to_cart', id=(item.id)) }}"><button class="continue">Continue</button></a>
+            </div>
+        <div class="content">
+    </div>
+</div>
+{% endif %}
+<script>
+    function openModal() {
+        document.getElementById('overlay').classList.remove('dnone');
+    }
+    function closeModal() {
+        document.getElementById('overlay').classList.add('dnone');
+    }
+</script>
+{% endblock %}

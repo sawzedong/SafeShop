@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Listings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/listings.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="left">
+    {% if username == 'shopaholic' %}
+    <img src="{{ url_for('static', filename='img/nature_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% elif username == 'seller_123' %}
+    <img src="{{ url_for('static', filename='img/dog_profile_picture.png') }}" alt="Profile Pic" class="pfp">
+    {% else %}
+    <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Pic" class="pfp">
+    {% endif %}
+    <br>
+    <h2>{{ username }}</h2>
+
+    <div class="nav">
+        <a class="linkitem" href="index.html">Profile</a>
+        <a class="linkitem" href="index.html">Settings</a>
+        <a class="linkitem active" href="{{ url_for('my_listings') }}">My listings</a>
+        <a class="linkitem" href="{{ url_for('ratings') }}">Ratings</a>
+        <a class="linkitem" href="{{ url_for('transactions') }}">Transactions</a>
+        <a class="linkitem" href="{{ url_for('logout') }}" id="logout">Logout</a>
+    </div>
+
+</div>
+<div id="right">
+    <div id="sorting">
+        <span>Sort by </span>
+        <select id="category" name="category">
+            <option value="newest">newest</option>
+            <option value="cheapest">cheapest</option>
+            <option value="most_relevant">most relevant</option>
+        </select>
+        <span>deals [Your listings only]</span>
+    </div>
+    {% if disable=='disabled' %}
+    <div class="warning-text">
+        <img src="{{ url_for('static', filename='img/warning.png') }}" class="warning-symbol">
+        <p>Your account is temporarily suspended as you have <strong>3 or more</strong> listings that are flagged as scams. Please <a href="{{ url_for('index') }}">contact us if you think this is an error.</a></p>
+    </div>
+    {% endif %}
+    <div id="listings">
+        {% for item in listings %}
+            <a class="listing_box" href="{{ url_for('listing_item', id=loop.index-1) }}">
+                <div class="boxtop boxmid0">
+                    <div class="boxtopleft">
+                        <img src="{{ url_for('static', filename='img/profile_picture_black.png') }}" alt="Profile Pic">
+                        <span>{{ item.username }}</span>
+                    </div>
+                    <div class="boxtopright tooltip">
+                        {% if item.verified %}
+                        <img src="{{ url_for('static', filename='img/check.png') }}" alt="Check symbol - not a scam">
+                        <span class="tooltiptext">This item is most likely not a scam.</span>
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/warning.png') }}" alt="Warning symbol - might be a scam">
+                        <span class="tooltiptext">This item is flagged and might be a <strong>scam</strong>.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="boxbottom">
+                    <div class="boxmid1 boxmid">
+                        <img src="{{ item.image }}" class="boximg" alt={{ item.name }}>
+                    </div>
+                    <div class="boxmid2 boxmid">
+                        <h3 class="boxname">{{ item.name }}</h3>
+                    </div>
+                    <div class="boxmid3 boxmid">
+                        <h4 class="boxprice">${{ item.price }}</h4>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

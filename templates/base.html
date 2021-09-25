@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="theme-color">
+        {% block head %}{% endblock %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.min.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" type="image/x-icon">  
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Squada+One&display=swap" rel="stylesheet">
+        <meta name="theme-color" color="#efefff">
+    </head>
+    <body>
+        <header>
+
+            <div id='nav_top'>
+                <div id="nav_topleft">
+                    {% if username != None %}
+                        {% if username == 'shopaholic' %}
+                        <img src="{{ url_for('static', filename='img/nature_profile_picture.png') }}" alt="Profile Pic">
+                        {% elif username == 'seller_123' %}
+                        <img src="{{ url_for('static', filename='img/dog_profile_picture.png') }}" alt="Profile Pic">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/profile_picture_white.png') }}" alt="Profile Pic">
+                        {% endif %}
+                        <p id="welcome_back_text">Welcome back, <span class="bold">{{ username }}</span></p>
+                    {% else %}
+                        <img src="{{ url_for('static', filename='img/profile_picture_white.png') }}" alt="Profile Picture">
+                        <p id="welcome_back_text"><a class="llink" href="{{ url_for('login') }}">Login now</a></p>
+                    {% endif %}
+                </div>
+                <div id="nav_topright">
+                    <a class="rlink" id="sell_link" href="{{ url_for('create') }}">Sell items</a>
+                    {% if username %}
+                        <a class="rlink" id="acc_link" href="{{ url_for('ratings') }}">Profile Info</a>
+                    {% else %}
+                        <a class="rlink" id="acc_link" href="{{ url_for('register') }}">Register</a>
+                    {% endif %}
+                    <a class="rlink" id="cart_link" href="{{ url_for('cart') }}">
+                        <div>
+                            {{ numitems }} items <img src="{{ url_for('static', filename='img/shopping_cart.png') }}" alt="Shopping Cart" id="cart_img"/>
+                        </div>
+                    </a>
+                </div>
+            </div> 
+
+            <div id='nav_bottom'>
+                <a href="{{ url_for('index') }}">
+                <div id="logo_wrapper">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Safe Shop Company Logo" id="logo_img">
+                    <p id="logo_name">&nbsp;SafeShop</p>
+                </div>
+                </a>
+
+                <form id="search_input" action="{{ url_for('searching') }}" method="post">
+                    <label for="search_term" id="search_term_label">Key in search term</label>
+                    <input type="text" placeholder="Enter search term here..." id="search_term" name="search_term">
+                    <button><img src="{{ url_for('static', filename='img/search.png') }}" alt="Search icon" id="search_img" type="submit"></button>
+                </form>
+                
+                <div id="filter_dropdown">
+                    <select id="category" name="category" onchange="categoryChange()"> 
+                        <option value="nocat" {% if selected == "nocat" %} selected="selected" {% endif %}>No category</option>
+                        <option value="electronics" {% if selected == "electronics" %} selected="selected" {% endif %}>Electronics</option>
+                        <option value="clothes" {% if selected == "clothes" %} selected="selected" {% endif %}>Clothes</option>
+                        <option value="furniture" {% if selected == "furniture" %} selected="selected" {% endif %}>Furniture</option>
+                        <option value="home_appliances" {% if selected == "home_appliances" %} selected="selected" {% endif %}>Home Appliances</option>
+                        <option value="others" {% if selected == "others" %} selected="selected" {% endif %}>Others</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+        <article id="main">
+            {% block content %}{% endblock %}
+        </article>
+        <script>
+            function categoryChange() {
+                k = document.getElementById('category').value;
+                w = window.location.href;
+                if (w.includes("search=")) {
+                    window.location.href = w + '&category=' + k 
+                    
+                } else if (w.includes("category=")) {
+                    window.location.href = w.replace(/category=[A-z_]*/, 'category='+k)
+                } else {
+                    window.location.href = w + '?category=' + k
+                }
+            }
+        </script>
+    </body>
+</html>

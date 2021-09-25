@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>SafeShop - Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/register.min.css') }}">
+{% endblock %}
+{% block content %}
+<div id="register_wrapper">
+    <form id="register_form" action="{{ url_for('registerhandler') }}" method="post">
+        <h2>Register</h2>
+        <p>
+            <label for="name">Display name:</label><br/>
+            <input type="text" name="name" id="name" required/>
+        </p>
+        <p>
+            <label for="email">Email:</label><br/>
+            <input type="email" name="email" id="email" required/>
+        </p>
+        <p>
+            <label for="password">Password:</label><br/>
+            <input id="password" type="password" name="password" required/>
+        </p>
+        <button type="submit" id="register_submit" class="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
