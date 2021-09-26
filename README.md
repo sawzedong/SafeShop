@@ -43,7 +43,7 @@ listings
         username: string
         verified: bool
 ratings
-    uid: string (from auth) [needed for all users]
+    uid: string (from auth)
         index: integer
             desc: string
             stars: integer (0 to 5)
@@ -53,8 +53,7 @@ warnings
 ```
 You may refer to `sample-data.json`
 ### Setting up the firebase: Part 3
-After registering, go to authentication to find the uid. *I cannot remember if registering auto sets up the warning and ratings, so manually initialise it if necessary.*
-The uid can be used to set up the above info.
+After registering, go to authentication to find the uid. The uid can be used to set up the above info.
 ### Setting up photo uploading
 In `templates/create.html`, an API key is required to allow for the uploading and storage of images.
 Please visit [https://dev.filestack.com/login/](https://dev.filestack.com/login/) and get an API key, and insert it into the code in `templates/create.html`
@@ -107,6 +106,8 @@ Please note that the project is in no way complete, and might not be completed. 
 - fully functional user data setup
 
 The code may also not be optimised, nor are the security for the database querying very good.
+
+The code used is merely used to ensure functionality, and authentication for database requests should be written.
 ## Other related resources
 
 
